@@ -196,7 +196,7 @@ namespace HotelBooking.UnitTests
             {
                 new Booking { Id = 1, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(10), IsActive = false, RoomId = 1 }
             };
-            var localRooms = new List<Room> { new Room { Id = 1 }, new Room { Id = 2 } };
+            var localRooms = new List<Room> { new Room { Id = 1 }};
 
             var bookingMock = new Mock<IRepository<Booking>>();
             bookingMock.Setup(r => r.GetAllAsync()).ReturnsAsync(localBookings);
@@ -207,10 +207,11 @@ namespace HotelBooking.UnitTests
             var manager = new BookingManager(bookingMock.Object, roomMock.Object);
 
             // Act
-            int roomId = await manager.FindAvailableRoom(DateTime.Today.AddDays(10), DateTime.Today.AddDays(10));
+            var date = DateTime.Today.AddDays(10);
+            int roomId = await manager.FindAvailableRoom(date, date);
 
             // Assert: inactive booking should not block availability
-            Assert.NotEqual(-1, roomId);
+            Assert.Equal(1, roomId);
         }
 
         [Fact]
