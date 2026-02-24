@@ -189,6 +189,58 @@ namespace HotelBooking.UnitTests
         }
 
         [Fact]
+        public async Task FindAvailableRoom_IgnoresInactiveBookings_ReturnsAvailableRoom()
+        {
+            // Arrange: single inactive booking overlapping the requested date
+            var localBookings = new List<Booking>
+            {
+                new Booking { Id = 1, StartDate = DateTime.Today.AddDays(10), EndDate = DateTime.Today.AddDays(10), IsActive = false, RoomId = 1 }
+            };
+            var localRooms = new List<Room> { new Room { Id = 1 }, new Room { Id = 2 } };
+
+            var bookingMock = new Mock<IRepository<Booking>>();
+            bookingMock.Setup(r => r.GetAllAsync()).ReturnsAsync(localBookings);
+
+            var roomMock = new Mock<IRepository<Room>>();
+            roomMock.Setup(r => r.GetAllAsync()).ReturnsAsync(localRooms);
+
+            var manager = new BookingManager(bookingMock.Object, roomMock.Object);
+
+            // Act
+            int roomId = await manager.FindAvailableRoom(DateTime.Today.AddDays(10), DateTime.Today.AddDays(10));
+
+            // Assert: inactive booking should not block availability
+            Assert.NotEqual(-1, roomId);
+        }
+
+        [Fact]
+        public async Task GetFullyOccupiedDates_IgnoresInactiveBookings()
+        {
+            // Arrange: two rooms, both have bookings on the same date but bookings are inactive
+            var date = DateTime.Today.AddDays(15);
+            var localBookings = new List<Booking>
+            {
+                new Booking { Id = 1, StartDate = date, EndDate = date, IsActive = false, RoomId = 1 },
+                new Booking { Id = 2, StartDate = date, EndDate = date, IsActive = false, RoomId = 2 }
+            };
+            var localRooms = new List<Room> { new Room { Id = 1 }, new Room { Id = 2 } };
+
+            var bookingMock = new Mock<IRepository<Booking>>();
+            bookingMock.Setup(r => r.GetAllAsync()).ReturnsAsync(localBookings);
+
+            var roomMock = new Mock<IRepository<Room>>();
+            roomMock.Setup(r => r.GetAllAsync()).ReturnsAsync(localRooms);
+
+            var manager = new BookingManager(bookingMock.Object, roomMock.Object);
+
+            // Act
+            var fullyOccupied = await manager.GetFullyOccupiedDates(date, date);
+
+            // Assert: inactive bookings should not count towards fully occupied
+            Assert.Empty(fullyOccupied);
+        }
+
+        [Fact]
         public async Task CreateBooking_WithMoq_AddsBookingAndSetsProperties()
         {
             // Arrange
