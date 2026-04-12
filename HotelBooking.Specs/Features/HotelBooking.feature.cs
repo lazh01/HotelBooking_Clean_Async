@@ -341,7 +341,7 @@ namespace HotelBooking.Specs.Features
             {
                 await this.ScenarioStartAsync();
 #line 40
-    await testRunner.GivenAsync("there are 2 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.GivenAsync("there are 1 available rooms", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 41
     await testRunner.AndAsync("a room is booked from in 1 day to in 3 days", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

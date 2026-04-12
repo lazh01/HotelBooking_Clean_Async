@@ -37,7 +37,7 @@ Feature: Create Booking
   # --- Overlap types ---
 
   Scenario: Booking with no overlap is created
-    Given there are 2 available rooms
+    Given there are 1 available rooms
     And a room is booked from in 1 day to in 3 days
     When I try to book from in 5 days to in 8 days
     Then the booking should return true

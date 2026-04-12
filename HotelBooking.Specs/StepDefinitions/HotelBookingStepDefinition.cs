@@ -6,14 +6,6 @@ using Moq;
 using Reqnroll;
 using Xunit;
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using HotelBooking.Core;
-using Moq;
-using Reqnroll;
-using Xunit;
-
 namespace HotelBooking.Specs.StepDefinitions
 {
     [Binding]
@@ -126,7 +118,7 @@ namespace HotelBooking.Specs.StepDefinitions
             "tomorrow" => DateTime.Today.AddDays(1),
             "yesterday" => DateTime.Today.AddDays(-1),
             "today" => DateTime.Today,
-            _ => throw new ArgumentException($"Unknown date descriptor: {desc}")
+            _ => throw new InvalidOperationException($"Unknown date descriptor: {desc}")
         };
     }
 }
