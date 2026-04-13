@@ -58,26 +58,48 @@ namespace HotelBooking.Mvc.Controllers
         }
 
         // POST: Bookings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StartDate,EndDate,CustomerId")] Booking booking)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                ViewData["CustomerId"] = new SelectList(
+                    await customerRepository.GetAllAsync(), "Id", "Name", booking.CustomerId);
+                ViewBag.Status = "The booking could not be created. There were no available room.";
+                return View(booking);
+            }
+
+            try
             {
                 bool created = await bookingManager.CreateBooking(booking);
 
                 if (created)
                 {
+                    if (Request.Headers["Accept"].ToString().Contains("application/json"))
+                        return Ok(new { message = "Booking created successfully." });
+
                     return RedirectToAction(nameof(Index));
                 }
-            }
 
-            ViewData["CustomerId"] = new SelectList(
-                await customerRepository.GetAllAsync(), "Id", "Name", booking.CustomerId);
-            ViewBag.Status = "The booking could not be created. There were no available room.";
-            return View(booking);
+                if (Request.Headers["Accept"].ToString().Contains("application/json"))
+                    return Conflict(new { message = "The booking could not be created. There were no available room." });
+
+                ViewData["CustomerId"] = new SelectList(
+                    await customerRepository.GetAllAsync(), "Id", "Name", booking.CustomerId);
+                ViewBag.Status = "The booking could not be created. There were no available room.";
+                return View(booking);
+            }
+            catch (ArgumentException ex)
+            {
+                if (Request.Headers["Accept"].ToString().Contains("application/json"))
+                    return BadRequest(new { message = ex.Message });
+
+                ViewData["CustomerId"] = new SelectList(
+                    await customerRepository.GetAllAsync(), "Id", "Name", booking.CustomerId);
+                ViewBag.Status = "The booking could not be created. There were no available room.";
+                return View(booking);
+            }
         }
 
         // GET: Bookings/Edit/5
