@@ -48,13 +48,13 @@ Feature: Create Booking
     When I try to book from in 1 day to in 5 days
     Then the booking should return false
 
-  Scenario: New period fully covered by existing booking is rejected
+  Scenario: New period fully covers existing booking is rejected
     Given there are 1 available rooms
     And a room is booked from in 2 days to in 4 days
     When I try to book from in 1 day to in 5 days
     Then the booking should return false
 
-  Scenario: New period fully covers existing booking is rejected
+  Scenario: New period fully covered by existing booking is rejected
     Given there are 1 available rooms
     And a room is booked from in 1 day to in 5 days
     When I try to book from in 2 days to in 4 days
