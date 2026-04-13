@@ -393,15 +393,15 @@ namespace HotelBooking.Specs.Features
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="New period fully covered by existing booking is rejected")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="New period fully covers existing booking is rejected")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
-        [global::Xunit.TraitAttribute("Description", "New period fully covered by existing booking is rejected")]
-        public async global::System.Threading.Tasks.Task NewPeriodFullyCoveredByExistingBookingIsRejected()
+        [global::Xunit.TraitAttribute("Description", "New period fully covers existing booking is rejected")]
+        public async global::System.Threading.Tasks.Task NewPeriodFullyCoversExistingBookingIsRejected()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "7";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("New period fully covered by existing booking is rejected", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("New period fully covers existing booking is rejected", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 51
@@ -430,15 +430,15 @@ namespace HotelBooking.Specs.Features
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="New period fully covers existing booking is rejected")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="New period fully covered by existing booking is rejected")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Create Booking")]
-        [global::Xunit.TraitAttribute("Description", "New period fully covers existing booking is rejected")]
-        public async global::System.Threading.Tasks.Task NewPeriodFullyCoversExistingBookingIsRejected()
+        [global::Xunit.TraitAttribute("Description", "New period fully covered by existing booking is rejected")]
+        public async global::System.Threading.Tasks.Task NewPeriodFullyCoveredByExistingBookingIsRejected()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "8";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("New period fully covers existing booking is rejected", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("New period fully covered by existing booking is rejected", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 57
